@@ -64,9 +64,9 @@ class DatabaseClient(BaseDatabaseClient):
 
     @classmethod
     def extend_environment(cls, conn_params):
-        if 'password' in conn_params:
+        if conn_params.get('password'):
             os.environ['PGPASSWORD'] = conn_params['password']
-        if 'sslmode' in conn_params:
+        if conn_params.get('sslmode'):
             os.environ['PGSSLMODE'] = conn_params['sslmode']
 
     @classmethod
