@@ -14,6 +14,12 @@ def test_get_connection_params(mocker):
 
     client = pretend.stub(generate_db_auth_token=generate_db_auth_token)
     mocker.patch.object(boto3, "client", return_value=client)
+    mock_resolve_result = mocker.Mock()
+    mock_resolve_result.target.to_text.return_value = 'www.labdigital.nl'
+    mocker.patch(
+        'django_iam_dbauth.utils.dns.resolver.resolve',
+        return_value=[mock_resolve_result]
+    )
 
     settings = {
         "NAME": "example",
